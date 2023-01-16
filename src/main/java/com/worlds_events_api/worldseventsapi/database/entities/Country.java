@@ -11,7 +11,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String country;
 
     @OneToMany(mappedBy = "country")
@@ -19,9 +19,8 @@ public class Country {
 
     public Country() { }
 
-    public Country(String country, Set<Event> events) {
+    public Country(String country) {
         this.country = country;
-        this.events = events;
     }
 
     public Country(Long id, String country, Set<Event> events) {
