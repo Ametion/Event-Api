@@ -19,9 +19,8 @@ public class Tag {
 
     public Tag() { }
 
-    public Tag(String tag, Set<Event> events) {
+    public Tag(String tag) {
         this.tag = tag;
-        this.events = events;
     }
 
     public Tag(Long id, String tag, Set<Event> events) {
