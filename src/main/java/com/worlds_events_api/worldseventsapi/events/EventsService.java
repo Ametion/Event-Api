@@ -51,7 +51,7 @@ public class EventsService {
 
             //If countryId id is 0 function will return event with random country
             var country = getEventRequest.countryId == 0 ? null : countriesRepo.findById(getEventRequest.countryId).get();
-            var tags = tagsRepo.findByIdIn(getEventRequest.tags);
+            var tags = getEventRequest.tags.size() == 0 ? null : tagsRepo.findByIdIn(getEventRequest.tags);
 
             var dbEvents = (ArrayList<Event>)eventsRepo.findAll();
 
@@ -60,24 +60,11 @@ public class EventsService {
             dbEvents.forEach(e -> {
                 var eventDate = LocalDate.parse(e.getDate(), formatter);
 
-                if(country == null){
-                    if((eventDate.isBefore(dateAfter) && eventDate.isAfter(dateBefore) || (eventDate.isEqual(dateAfter) || eventDate.isEqual(dateBefore)))){
-                        events.add(e);
-                        return;
-                    }
-
-                }
-
-                if(tags.isEmpty() && e.getCountry().equals(country)){
-                    if((eventDate.isBefore(dateAfter) && eventDate.isAfter(dateBefore) || (eventDate.isEqual(dateAfter) || eventDate.isEqual(dateBefore)))){
-                        events.add(e);
-                        return;
-                    }
-                }
-
-                if(CollectionUtils.containsAny(e.getTags(), tags) && e.getCountry().equals(country)){
-                    if((eventDate.isBefore(dateAfter) && eventDate.isAfter(dateBefore) || (eventDate.isEqual(dateAfter) || eventDate.isEqual(dateBefore)))){
-                        events.add(e);
+                if (!eventDate.isBefore(dateBefore) && !eventDate.isAfter(dateAfter)) {
+                    if (country == null || e.getCountry().equals(country)) {
+                        if (tags == null || CollectionUtils.containsAny(e.getTags(), tags)) {
+                            events.add(e);
+                        }
                     }
                 }
             });
