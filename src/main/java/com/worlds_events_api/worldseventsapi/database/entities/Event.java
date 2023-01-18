@@ -16,7 +16,7 @@ public class Event {
     private String description;
 
     @Column(nullable = false)
-    private Date date;
+    private String date;
 
     @Column(nullable = false, name = "linkToWiki")
     private String linkToWiki;
@@ -39,7 +39,15 @@ public class Event {
     public Event() {
     }
 
-    public Event(String description, Date date, String linkToWiki, Country country, Set<Image> images, Set<Tag> tags) {
+    public Event(String description, String date, String linkToWiki, Country country, Set<Tag> tags) {
+        this.description = description;
+        this.date = date;
+        this.linkToWiki = linkToWiki;
+        this.country = country;
+        this.tags = tags;
+    }
+
+    public Event(String description, String date, String linkToWiki, Country country, Set<Image> images, Set<Tag> tags) {
         this.description = description;
         this.date = date;
         this.linkToWiki = linkToWiki;
@@ -48,7 +56,7 @@ public class Event {
         this.tags = tags;
     }
 
-    public Event(Long id, String description, Date date, String linkToWiki, Country country, Set<Image> images, Set<Tag> tags) {
+    public Event(Long id, String description, String date, String linkToWiki, Country country, Set<Image> images, Set<Tag> tags) {
         this.id = id;
         this.description = description;
         this.date = date;
@@ -74,11 +82,11 @@ public class Event {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
