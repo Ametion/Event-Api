@@ -75,7 +75,7 @@ public class EventsService {
 
             event.getTags().forEach(t -> eventTags.add(t.getTag()));
 
-            return new EventResponse(event.getDate(), event.getDescription(), event.getCountry().getCountry(), eventTags);
+            return new EventResponse(event.getDate(), event.getDescription(), event.getCountry().getCountry(), event.getLinkToWiki(), eventTags);
         }catch (Exception ex){
             throw new Exception(ex.getMessage());
         }
